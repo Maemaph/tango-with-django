@@ -1,0 +1,51 @@
+{% extends 'rango/base.html' %}
+{% load static %}
+
+
+
+<link href="{% static 'index.css' %}" rel="stylesheet" type="text/css">
+
+{% block body_block %}
+    <p> visits: {{ visits }}</p>
+    <h1>Rango says...</h1>
+    {% if user.is_authenticated %}
+    <strong>howdy {{ user.username }}!</strong>
+    {% else %}
+    <strong>hey there partner!</strong>
+    {% endif %}
+
+    <div>
+        <h2>Most Liked Categories</h2>
+            {% if categories %}
+            <ul>
+                {% for category in categories %}
+                <li>
+                    <a href="{% url 'rango:show_category' category.slug %}">{{ category.name }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+                <strong>There are no categories present</strong>
+            {% endif %}
+        </div>
+        <div>
+            <h2>Most Viewed Pages</h2>
+            {% if pages %}
+            <ul>
+                {% for page in pages %}
+                <li>
+                    <a href="{{ page.url }}">{{ page.title }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <strong>There are no pages present</strong>
+            {% endif%}
+        </div>
+
+        <div>
+            <img src="{% static 'images/singapore.jpg' %}" alt="Singapore"
+            width="40%" height="40%">
+        </div>
+
+{% endblock %}
